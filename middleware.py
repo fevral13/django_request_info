@@ -5,7 +5,7 @@ import sys
 from django.http import HttpRequest
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('request_info')
 
 def _format_variable(name, value):
     _val = value
