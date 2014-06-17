@@ -5,7 +5,33 @@ import sys
 from django.http import HttpRequest
 
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'brief': {
+            'format': '%(levelname)s %(asctime)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console_brief': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'brief'
+        },
+    },
+    'loggers': {
+        'request_info': {
+            'handlers': ['console_brief'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    }
+}
+
+logging.config.dictConfig(LOGGING)
 logger = logging.getLogger('request_info')
+
 
 def _format_variable(name, value):
     _val = value
