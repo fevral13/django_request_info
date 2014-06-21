@@ -46,7 +46,7 @@ def _format_variable(name, value):
 class RequestInfoLoggingMiddleware(object):
     def process_response(self, request, response):
         status = response.status_code
-        msg = u'{method} {path} {status} {size}'.format(method=request.method, path=request.get_full_path(), status=status, size=response.tell())
+        msg = u'{method} {path} {status}'.format(method=request.method, path=request.get_full_path(), status=status)
         try:
             if request.user.is_authenticated():
                 msg += u' [#{id} {name}]'.format(id=request.user.id, name=request.user.username)
