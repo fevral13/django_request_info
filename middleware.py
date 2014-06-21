@@ -47,8 +47,11 @@ class RequestInfoLoggingMiddleware(object):
     def process_response(self, request, response):
         status = response.status_code
         msg = u'{method} {path} {status} {size}'.format(method=request.method, path=request.get_full_path(), status=status, size=response.tell())
-        if request.user.is_authenticated():
-            msg += u' [#{id} {name}]'.format(id=request.user.id, name=request.user.username)
+        try:
+            if request.user.is_authenticated():
+                msg += u' [#{id} {name}]'.format(id=request.user.id, name=request.user.username)
+        except AttributeError:  # no request.user
+            pass
 
         if status not in (200, 301, 302):
             logger.warning(msg)
